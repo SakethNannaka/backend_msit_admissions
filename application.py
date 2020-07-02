@@ -19,7 +19,7 @@ from itsdangerous import URLSafeTimedSerializer
 # from itsdangerous import URLSafeTimedSerializer
 from tokens import *
 import boto3
-from boto.s3.connection import S3Connection
+from boto3.s3.connection import S3Connection
 
 
 # ******************************
