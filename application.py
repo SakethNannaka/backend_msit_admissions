@@ -71,7 +71,7 @@ Session(app)
 CORS(app, supports_credentials=True)
 # CORS(app)
 
-s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+# s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 client = boto3.client('s3')
 
 @app.route("/")
