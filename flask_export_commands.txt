@@ -1,0 +1,32 @@
+export set FLASK_APP=application.py 
+export set FLASK_DEBUG=1 
+export set DATABASE_URL=postgres://zmukdnlbolstmj:371d5a68e9380a0036ca60f906f96b97f63738b9e57e61e997d82eaf137d1e52@ec2-3-222-150-253.compute-1.amazonaws.com:5432/d6ci3pr6sl5bio
+flask run
+
+
+export set FLASK_APP=application.py 
+export set FLASK_DEBUG=1 
+export set DATABASE_URL=postgres://auzgonkcwtyzdy:916179feede0e89f272059c4cf7c4c8b4a0270195bbff1db59ec79530c799aa1@ec2-34-206-252-187.compute-1.amazonaws.com:5432/d97vsilgirne4n
+flask run
+
+
+
+DATABASE_DETAILS:
+HEROKU:
+Username: msitadmissions12@gmail.com
+Password: Msit@2k19
+
+Host 
+ec2-3-222-150-253.compute-1.amazonaws.com
+Database 
+d6ci3pr6sl5bio
+User 
+zmukdnlbolstmj
+Port 
+5432
+Password 
+371d5a68e9380a0036ca60f906f96b97f63738b9e57e61e997d82eaf137d1e52
+
+
+URI 
+postgres://zmukdnlbolstmj:371d5a68e9380a0036ca60f906f96b97f63738b9e57e61e997d82eaf137d1e52@ec2-3-222-150-253.compute-1.amazonaws.com:5432/d6ci3pr6sl5bio
