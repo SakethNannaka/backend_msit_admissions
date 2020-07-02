@@ -11,6 +11,9 @@ flask-sqlalchemy = "*"
 itsdangerous = "*"
 boto3 = "*"
 flask-cors = "*"
+flask-session = "*"
+psycopg2-binary = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 
