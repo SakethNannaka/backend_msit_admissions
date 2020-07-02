@@ -19,6 +19,8 @@ from itsdangerous import URLSafeTimedSerializer
 # from itsdangerous import URLSafeTimedSerializer
 from tokens import *
 import boto3
+from boto.s3.connection import S3Connection
+
 
 # ******************************
 # from itsdangerous import URLSafeTimedSerializer
@@ -69,6 +71,7 @@ Session(app)
 CORS(app, supports_credentials=True)
 # CORS(app)
 
+s3 = S3Connection(os.getenv['S3_KEY'], os.getenv['S3_SECRET'])
 client = boto3.client('s3')
 
 @app.route("/")
