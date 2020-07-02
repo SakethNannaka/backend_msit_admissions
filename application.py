@@ -105,6 +105,7 @@ def changePassword():
     data = request.get_json()
     print(data)
     # email = session["email"] This needs to be used when it is integrated with front end
+    print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{session.get("email")}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
     email = data['email']
     # email = session['email']
     print(email)
