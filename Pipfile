@@ -5,6 +5,12 @@ name = "pypi"
 
 [packages]
 gunicorn = "*"
+bcrypt = "*"
+flask = "*"
+flask-sqlalchemy = "*"
+itsdangerous = "*"
+boto3 = "*"
+flask-cors = "*"
 
 [dev-packages]
 
