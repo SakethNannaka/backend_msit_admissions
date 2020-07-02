@@ -264,7 +264,21 @@ def profile():
         print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{user}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
         user.full_name = data["full_name"]
         user.parent_name = data["parent_name"]
-        user.parent_relation = data["parent_relation"]        
+        user.parent_relation = data["parent_relation"]
+        user.date_of_birth=data["date_of_birth"]
+        user.board_number=data["board_number"]
+        user.btech=data["btech"]
+        user.photo_status=data["photo_status"]
+        user.gender=data["gender"]
+        user.address_line1=data["address_line1"]        
+        user.nationality=data["nationality"]
+        user.address_line2=data["address_line2"]
+        user.place_town=data["place_town"]
+        user.pincode=data["pincode"]
+        user.city=data["city"]
+        user.mobile_no=data["mobile_no"]
+        user.landline_no=data["landline_no"]
+        user.board_name=data["board_name"]
         db.session.commit()
         return ({"statuscode": 201, "success":"profile modified successfully" })
     except:
