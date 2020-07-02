@@ -178,7 +178,7 @@ def send_email(receiver_email,token_url):
                                             <tr>"""
 
 
-    html = html +  f"""<td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="http://localhost:5000/confirm_email/{token_url}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Confirm Account</a></td>
+    html = html +  f"""<td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="https://flask-deploy-admissions.herokuapp.com/confirm_email/{token_url}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Confirm Account</a></td>
                                             </tr>
                                         </table>
                                     </td>
