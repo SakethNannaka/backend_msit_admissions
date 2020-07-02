@@ -105,10 +105,12 @@ def changePassword():
     data = request.get_json()
     print(data)
     # email = session["email"] This needs to be used when it is integrated with front end
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     print(session.get("email"))
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     email = data['email']
     # email = session['email']
-    print(email)
+    # print(email)
     salt = bcrypt.gensalt()
     pwd = data["password"].encode()
     pwd = bcrypt.hashpw(pwd, salt)
