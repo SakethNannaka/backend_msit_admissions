@@ -143,7 +143,7 @@ def login():
                     session.permanent = True
                     return ({"auth": True, "message": "You have successfully logged in"})
                 else:
-                    return ({"auth": False, "message": "please verify your email"})
+                    return ({"auth": False, "message": "Please click the activation link we sent to your email."})
             else:
                 return {"auth": False, "message": "Please enter correct password"}
         else:
