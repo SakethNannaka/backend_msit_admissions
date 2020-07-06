@@ -425,4 +425,4 @@ def order():
     currency = "INR"
     payment_capture = 1
     payment = razorpay_client.order.create(amount= amount, currency= currency, payment_capture= payment_capture)
-    return payments
+    return payment
