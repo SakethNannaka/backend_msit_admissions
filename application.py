@@ -19,7 +19,7 @@ from itsdangerous import URLSafeTimedSerializer
 # from itsdangerous import URLSafeTimedSerializer
 from tokens import *
 import boto3
-from boto.s3.connection import S3Connection
+import razorpay
 
 
 # ******************************
@@ -73,6 +73,7 @@ CORS(app, supports_credentials=True)
 
 # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 client = boto3.client('s3')
+razorpay_client = razorpay.Client(auth=("rzp_test_emOLmEoveDJMNM", "6V6LXdAb4dIWfykkNJiZNWQ7"))
 
 @app.route("/")
 @cross_origin(supports_credentials=True)
@@ -417,3 +418,11 @@ def getProfile():
         return ({'response':userprofile, 'message' : "True"})
     else:
         return ({'response':userObj, 'message' : "False"})
+
+@app.route("/orders", methods=["GET", "POST"])
+def order():
+    amount = 1000
+    currency = "INR"
+    payment_capture = 1
+    payment = razorpay_client.order.create(amount= amount, currency= currency, payment_capture= payment_capture)
+    return payments

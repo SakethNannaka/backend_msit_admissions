@@ -15,6 +15,7 @@ flask-session = "*"
 psycopg2-binary = "*"
 sqlalchemy = "*"
 boto = "*"
+razorpay = "==0.2.0"
 
 [dev-packages]
 
