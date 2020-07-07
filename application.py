@@ -73,7 +73,7 @@ CORS(app, supports_credentials=True)
 
 # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 client = boto3.client('s3')
-razorpay_client = razorpay.Client(auth=("rzp_test_emOLmEoveDJMNM", "6V6LXdAb4dIWfykkNJiZNWQ7"))
+razorpay_client = razorpay.Client(auth=("rzp_live_FGdmm48CwAcMir", "FocTLnUgxIOchp4dtwbnslay"))
 
 @app.route("/")
 @cross_origin(supports_credentials=True)
