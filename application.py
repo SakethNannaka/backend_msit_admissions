@@ -434,7 +434,6 @@ def payment_capture():
 	data = dict((key, request.form.getlist(key)) for key in request.form.keys())
 	print(request.form)
 	print(data)
-	print(request.form.get("payload"))
-	print(request.form.get("payload").get("payment"))
+	print(razorpay_client.utility.verify_webhook_signature(request.form.get("webhook_body"),request.form.get("webhook_signature"),request.form.get("webhook_secret")))
 	print("***********************************************************************************************************************")
 	return "YES"
