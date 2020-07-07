@@ -433,4 +433,5 @@ def payment_capture():
 	print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{request.form}<<<<<<<<<<<<<<<<<<<<<<<<")
 	data = dict((key, request.form.getlist(key)) for key in request.form.keys())
 	print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{data}<<<<<<<<<<<<<<<<<<<<<<<<")
+	print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{request.form.get(id)}<<<<<<<<<<<<<<<<<<<<<<<<")
 	return "YES"
