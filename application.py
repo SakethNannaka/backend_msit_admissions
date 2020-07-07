@@ -20,6 +20,7 @@ from itsdangerous import URLSafeTimedSerializer
 from tokens import *
 import boto3
 import razorpay
+from werkzeug.datastructures import *
 
 
 # ******************************
@@ -429,5 +430,6 @@ def order():
 
 @app.route("/payment_capture",methods=["GET","POST"])
 def payment_capture():
-	dict((key, request.form.getlist(key) if len(request.form.getlist(key)) > 1 else request.form.getlist(key)[0]) for key in request.form.keys())	print(data)
+	data = dict((key, request.form.getlist(key)) for key in request.form.keys())
+	print(data)
 	return "YES"
