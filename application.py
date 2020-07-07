@@ -434,7 +434,6 @@ def payment_capture():
 	data = dict((key, request.form.getlist(key)) for key in request.form.keys())
 	print(request.form)
 	print(data)
-	print(request.form.get(payment).get("entity").get(id))
 	print(request.form.get("payload"))
 	print(request.form.get("payload").get("payment"))
 	print("***********************************************************************************************************************")
