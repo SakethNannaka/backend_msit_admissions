@@ -430,6 +430,7 @@ def order():
 
 @app.route("/payment_capture",methods=["GET","POST"])
 def payment_capture():
+	print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{request.form}<<<<<<<<<<<<<<<<<<<<<<<<")
 	data = dict((key, request.form.getlist(key)) for key in request.form.keys())
-	print(data)
+	print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{data}<<<<<<<<<<<<<<<<<<<<<<<<")
 	return "YES"
