@@ -421,7 +421,7 @@ def getProfile():
 
 @app.route("/orders", methods=["GET", "POST"])
 def order():
-    amount = 1000
+    amount = 100
     currency = "INR"
     payment_capture = 1
     payment = razorpay_client.order.create(amount= amount, currency= currency, payment_capture= payment_capture)
