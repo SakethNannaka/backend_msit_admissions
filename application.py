@@ -426,3 +426,8 @@ def order():
     payment_capture = 1
     payment = razorpay_client.order.create(amount= amount, currency= currency, payment_capture= payment_capture)
     return payment
+
+@app.route("/payment_capture",methods=["GET","POST"])
+def payment_capture():
+	print(request.form)
+	return "YES"
