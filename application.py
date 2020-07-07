@@ -429,5 +429,5 @@ def order():
 
 @app.route("/payment_capture",methods=["GET","POST"])
 def payment_capture():
-	print(request.form)
+	print(request.form.get(payment_id),request.form.get(razorpay_signature),request.form.get(razorpay_order_id))
 	return "YES"
