@@ -432,7 +432,7 @@ def order():
 def payment_capture():
 	print("***********************************************************************************************************************")
 	data = dict((key, request.form.getlist(key)) for key in request.form.keys())
-	print(request.form)
+	print(request.form.get("webhook_body"))
 	print(data)
 	print(razorpay_client.utility.verify_webhook_signature(request.form.get("webhook_body"),request.form.get("webhook_signature"),request.form.get("webhook_secret")))
 	print("***********************************************************************************************************************")
