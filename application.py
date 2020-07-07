@@ -429,8 +429,5 @@ def order():
 
 @app.route("/payment_capture",methods=["GET","POST"])
 def payment_capture():
-	data = request.form.to_dict()
-	print(data)
-	for x in data:
-		print(x)
+	data = dict((key, request.form.getlist(key) if len(request.form.getlist(key)) > 1 else request.form.getlist(key)[0]) for key in request.form.keys())	print(data)
 	return "YES"
