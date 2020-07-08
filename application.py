@@ -437,3 +437,9 @@ def payment_capture():
 	print(razorpay_client.utility.verify_webhook_signature(request.form.get("webhook_body"),request.form.get("webhook_signature"),request.form.get("webhook_secret")))
 	print("***********************************************************************************************************************")
 	return "YES"
+
+@app.route("/fetch",methods=["GET"])
+def fetch():
+	resp=razorpay_client.payment.fetch_all()
+	print(resp)
+	return resp
