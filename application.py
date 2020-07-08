@@ -424,7 +424,7 @@ def getProfile():
 def order():
     amount = 100
     currency = "INR"
-    payment_capture = 1
+    payment_capture = 0
     payment = razorpay_client.order.create(amount= amount, currency= currency, payment_capture= payment_capture)
     return payment
 
