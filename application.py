@@ -440,8 +440,11 @@ def payment_capture():
 
 @app.route("/fetch",methods=["GET","POST"])
 def fetch():
+	print("*****************************************************Fetch******************************************************************")
 	paymentId=request.form.get("paymentId")
 	paymentStatus=razorpay_client.payment.fetch(paymentId)
+	print(paymentId)
 	resp=razorpay_client.payment.fetch_all()
 	print(paymentStatus)
+	print("*****************************************************Fetch******************************************************************")
 	return paymentStatus
