@@ -424,7 +424,7 @@ def getProfile():
 def order():
     amount = 100
     currency = "INR"
-    payment_capture = 0
+    payment_capture = 1
     payment = razorpay_client.order.create(amount= amount, currency= currency, payment_capture= payment_capture)
     return payment
 
@@ -438,8 +438,10 @@ def payment_capture():
 	print("***********************************************************************************************************************")
 	return "YES"
 
-@app.route("/fetch",methods=["GET"])
+@app.route("/fetch",methods=["GET","POST"])
 def fetch():
+	paymentId=request.form.get("paymentId")
+	paymentStatus=client.payment.fetch(paymentId)
 	resp=razorpay_client.payment.fetch_all()
-	print(resp)
-	return resp
+	print(paymentStatus)
+	return paymentStatus
