@@ -11,22 +11,3 @@ flask run
 
 
 
-DATABASE_DETAILS:
-HEROKU:
-Username: msitadmissions12@gmail.com
-Password: Msit@2k19
-
-Host 
-ec2-3-222-150-253.compute-1.amazonaws.com
-Database 
-d6ci3pr6sl5bio
-User 
-zmukdnlbolstmj
-Port 
-5432
-Password 
-371d5a68e9380a0036ca60f906f96b97f63738b9e57e61e997d82eaf137d1e52
-
-
-URI 
-postgres://zmukdnlbolstmj:371d5a68e9380a0036ca60f906f96b97f63738b9e57e61e997d82eaf137d1e52@ec2-3-222-150-253.compute-1.amazonaws.com:5432/d6ci3pr6sl5bio
