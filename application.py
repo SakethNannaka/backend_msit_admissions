@@ -442,8 +442,8 @@ def payment_capture():
 def fetch():
 	print("*****************************************************Fetch******************************************************************")
 	paymentId=str(request.form.get("paymentId"))
-	paymentStatus=razorpay_client.payment.fetch(paymentId)
 	print(paymentId)
+	paymentStatus=razorpay_client.payment.fetch(paymentId)
 	print(paymentStatus)
 	print("*****************************************************Fetch******************************************************************")
 	return paymentStatus
