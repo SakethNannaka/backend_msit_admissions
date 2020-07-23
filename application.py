@@ -448,3 +448,16 @@ def fetch(token):
 	print(paymentStatus)
 	print("*****************************************************Fetch******************************************************************")
 	return paymentStatus
+
+
+@app.route("/fetch2",methods=["GET","POST"])
+def fetch2():
+	paymentStatus=razorpay_client.payment.fetch_all()
+	gatobject = GatApplications.get("202G00001")
+	if paymentStatus['status']=='captured':
+		if gatobject:
+			gatobject.status == "captured"
+			db.session.commit()
+
+
+	return paymentStatus
