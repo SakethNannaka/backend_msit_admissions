@@ -29,6 +29,7 @@ from werkzeug.datastructures import *
 SECRET_KEY = '9OLWxND4o83j4K4iuopO'
 SECURITY_PASSWORD_SALT = 'my_precious_two'
 
+
 def generate_confirmation_token(email):
     serializer = URLSafeTimedSerializer(SECRET_KEY)
     return serializer.dumps(email, salt=SECURITY_PASSWORD_SALT)
@@ -39,7 +40,7 @@ def confirm_token(token, expiration=360000):
     try:
         email = serializer.loads(
             token,
-            salt=SECURITY_PASSWORD_SALT ,
+            salt=SECURITY_PASSWORD_SALT,
             max_age=expiration
         )
     except:
@@ -48,7 +49,7 @@ def confirm_token(token, expiration=360000):
 
 # *************************
 
-# app = Flask(_name_)   
+# app = Flask(_name_)
 # # Check for environment variable
 # if not os.getenv("DATABASE_URL"):
 #     raise RuntimeError("DATABASE_URL is not set")
@@ -60,6 +61,7 @@ def confirm_token(token, expiration=360000):
 # # Set up database
 # engine = create_engine(os.getenv("DATABASE_URL"))
 # db = scoped_session(sessionmaker(bind=engine))
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
@@ -74,7 +76,9 @@ CORS(app, supports_credentials=True)
 
 # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 client = boto3.client('s3')
-razorpay_client = razorpay.Client(auth=("rzp_live_FGdmm48CwAcMir", "FocTLnUgxIOchp4dtwbnslay"))
+razorpay_client = razorpay.Client(
+    auth=("rzp_live_FGdmm48CwAcMir", "FocTLnUgxIOchp4dtwbnslay"))
+
 
 @app.route("/")
 @cross_origin(supports_credentials=True)
@@ -82,7 +86,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/register", methods = ["POST"])
+@app.route("/register", methods=["POST"])
 @cross_origin(supports_credentials=True)
 def register():
     data = request.get_json()
@@ -90,20 +94,22 @@ def register():
     salt = bcrypt.gensalt()
     password = data["password"].encode()
     password = bcrypt.hashpw(password, salt)
-    reg = Users(name = data["name"], email = data["email"], password = password.decode('utf-8'), knowmsit = data["selectValue"], contact= int(data["contact"]), education = data["education"], timestamp = time_stamp , active = False)
+    reg = Users(name=data["name"], email=data["email"], password=password.decode('utf-8'), knowmsit=data["selectValue"],
+                contact=int(data["contact"]), education=data["education"], timestamp=time_stamp, active=False)
 
     try:
         db.session.add(reg)
         db.session.commit()
-        send_email(data["email"],generate_confirmation_token(data["email"]))
-        return ({"statuscode":200, "success": "user registered successfully"})
+        send_email(data["email"], generate_confirmation_token(data["email"]))
+        return ({"statuscode": 200, "success": "user registered successfully"})
     except exc.IntegrityError:
-        return ({"statuscode": 400, "Error":"User already exists" })
+        return ({"statuscode": 400, "Error": "User already exists"})
     except:
         print('exception message', 'something went wrong while adding user')
-        return ({"statuscode": 500, "Error":"something went wrong while sending email" })
+        return ({"statuscode": 500, "Error": "something went wrong while sending email"})
 
-@app.route("/changepassword", methods = ["POST"])
+
+@app.route("/changepassword", methods=["POST"])
 @cross_origin(supports_credentials=True)
 def changePassword():
     # try:
@@ -123,10 +129,12 @@ def changePassword():
     userobj.password = pwd.decode('utf-8')
     db.session.add(userobj)
     db.session.commit()
-    return ({"success": True, "statuscode": 200, "message" : "sucessfully updated password"})
+    return ({"success": True, "statuscode": 200, "message": "sucessfully updated password"})
     # except:
     #     return ({"message" : "Something went wrong in updating the password"})
-@app.route("/login", methods = ["POST"])
+
+
+@app.route("/login", methods=["POST"])
 @cross_origin(supports_credentials=True)
 def login():
     try:
@@ -140,7 +148,7 @@ def login():
             print(userobj.active)
             if (bcrypt.checkpw(pwd, userobj.password.encode('utf-8'))):
                 if (userobj.active):
-                    
+
                     session['email'] = email
                     session.permanent = True
                     return ({"auth": True, "message": "You have successfully logged in"})
@@ -149,30 +157,31 @@ def login():
             else:
                 return {"auth": False, "message": "Please enter correct password"}
         else:
-            return ({"auth": False, "message":"User not exists. Please register to login" })
+            return ({"auth": False, "message": "User not exists. Please register to login"})
     except:
-        return ({"auth": False, "message":"Internal server error" })
+        return ({"auth": False, "message": "Internal server error"})
 
-            
-@app.route('/logout',methods=['POST'])
+
+@app.route('/logout', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def logout():
     print("session cleared")
     session.clear()
-    return({"auth": False, "message":"You have  logged out successfully "})
-        
+    return({"auth": False, "message": "You have  logged out successfully "})
 
-@app.route('/session',methods=['get'])
+
+@app.route('/session', methods=['get'])
 @cross_origin(supports_credentials=True)
 def check_session():
     print('entered')
     print(session.get('email'))
     if(session.get('email')):
         print(True)
-        userobj=Users.query.get(session.get("email"))
-        return ({"statuscode":200, "success": True,'active':userobj.active})
+        userobj = Users.query.get(session.get("email"))
+        return ({"statuscode": 200, "success": True, 'active': userobj.active})
     else:
-        return ({"statuscode":400, "error": False})
+        return ({"statuscode": 400, "error": False})
+
 
 @app.route('/forgot', methods=["POST"])
 @cross_origin(supports_credentials=True)
@@ -190,18 +199,19 @@ def forgot():
     forgot_email(email, otp)
     return ({"statuscode": 200, "success": "OTP Sent sucessfully", "otp": str(otp)})
 
-@app.route('/send',methods=["POST"])
+
+@app.route('/send', methods=["POST"])
 @cross_origin(supports_credentials=True)
 def recieve():
     data = request.get_json()
-    print(session.get('otp')==data['otp'])
-    if (session.get('otp')==data['otp']):
-        return ({"statuscode":200,"success":"OTP Verified sucessfully"})
+    print(session.get('otp') == data['otp'])
+    if (session.get('otp') == data['otp']):
+        return ({"statuscode": 200, "success": "OTP Verified sucessfully"})
     else:
-        return ({"statuscode":400,"error":"OTP Verification failed"})
-        
+        return ({"statuscode": 400, "error": "OTP Verification failed"})
 
-@app.route('/reset',methods=["POST"])
+
+@app.route('/reset', methods=["POST"])
 @cross_origin(supports_credentials=True)
 def reset():
     try:
@@ -215,12 +225,13 @@ def reset():
         userobj.password = pwd.decode('utf-8')
         db.session.add(userobj)
         db.session.commit()
-        return ({"success": True, "status code": 200, "message" : "sucessfully updated password"})
+        return ({"success": True, "status code": 200, "message": "sucessfully updated password"})
     except:
-        return ({"message" : "Something went wrong in updating the password"})
+        return ({"message": "Something went wrong in updating the password"})
+
 
 @app.route('/confirm_email/<token>')
-@app.route('/confirm_email/',methods=["GET,POST"])
+@app.route('/confirm_email/', methods=["GET,POST"])
 @cross_origin(supports_credentials=True)
 def confirm_email(token):
     try:
@@ -240,67 +251,72 @@ def confirm_email(token):
         print('You have confirmed your account. Thanks!,success')
         return('You have confirmed your account. Thanks!,success')
 
-@app.route('/profile', methods = ["POST"])
+
+@app.route('/profile', methods=["POST"])
 @cross_origin(supports_credentials=True)
 def profile():
     data = request.get_json()
     # print(data["postData"])
     data = data["postData"]
-    print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{data}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-    if (len(data["board_name"]) >1 and len(data["board_number"]) >1 and len(data["pincode"]) >1 and len(data["address_line1"]) >1 and len(data["image_url"]) >1 and len(data["mobile_no"])>1 ):
+    print(
+        f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{data}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+    if (len(data["board_name"]) > 1 and len(data["board_number"]) > 1 and len(data["pincode"]) > 1 and len(data["address_line1"]) > 1 and len(data["image_url"]) > 1 and len(data["mobile_no"]) > 1):
         print(True)
-        data["photo_status"]=True
+        data["photo_status"] = True
     else:
-        data["photo_status"]=False
-    profile = UserProfile(email = data["email"], board_name = data["board_name"], board_number = data["board_number"], btech = data["btech"], photo_status =data["photo_status"] ,full_name = data["full_name"], gender = data["gender"], date_of_birth = data["date_of_birth"], nationality = data["nationality"], address_line1 = data["address_line1"], address_line2 = data["address_line2"], place_town = data["place_town"], city = data["city"], pincode = data["pincode"], mobile_no = data["mobile_no"], landline_no = data["landline_no"], parent_name = data["parent_name"], parent_relation = data["parent_relation"], image_url = data["image_url"])
+        data["photo_status"] = False
+    profile = UserProfile(email=data["email"], board_name=data["board_name"], board_number=data["board_number"], btech=data["btech"], photo_status=data["photo_status"], full_name=data["full_name"], gender=data["gender"], date_of_birth=data["date_of_birth"], nationality=data["nationality"],
+                          address_line1=data["address_line1"], address_line2=data["address_line2"], place_town=data["place_town"], city=data["city"], pincode=data["pincode"], mobile_no=data["mobile_no"], landline_no=data["landline_no"], parent_name=data["parent_name"], parent_relation=data["parent_relation"], image_url=data["image_url"])
     try:
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>entered Try<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
         db.session.add(profile)
         db.session.commit()
-        return ({"statuscode":200, "success": "profile updated successfully"})
+        return ({"statuscode": 200, "success": "profile updated successfully"})
     except exc.IntegrityError:
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>entered IntegrityError<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
         db.session.rollback()
         email = data["email"]
-        user  = UserProfile.query.get(email)
-        print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{user}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+        user = UserProfile.query.get(email)
+        print(
+            f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>{user}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
         user.full_name = data["full_name"]
         user.parent_name = data["parent_name"]
         user.parent_relation = data["parent_relation"]
-        user.date_of_birth=data["date_of_birth"]
-        user.board_number=data["board_number"]
-        user.btech=data["btech"]
-        user.photo_status=data["photo_status"]
-        user.gender=data["gender"]
-        user.address_line1=data["address_line1"]        
-        user.nationality=data["nationality"]
-        user.address_line2=data["address_line2"]
-        user.place_town=data["place_town"]
-        user.pincode=data["pincode"]
-        user.city=data["city"]
-        user.mobile_no=data["mobile_no"]
-        user.landline_no=data["landline_no"]
-        user.board_name=data["board_name"]
+        user.date_of_birth = data["date_of_birth"]
+        user.board_number = data["board_number"]
+        user.btech = data["btech"]
+        user.photo_status = data["photo_status"]
+        user.gender = data["gender"]
+        user.address_line1 = data["address_line1"]
+        user.nationality = data["nationality"]
+        user.address_line2 = data["address_line2"]
+        user.place_town = data["place_town"]
+        user.pincode = data["pincode"]
+        user.city = data["city"]
+        user.mobile_no = data["mobile_no"]
+        user.landline_no = data["landline_no"]
+        user.board_name = data["board_name"]
         db.session.commit()
-        return ({"statuscode": 201, "success":"profile modified successfully" })
+        return ({"statuscode": 201, "success": "profile modified successfully"})
     except:
         print("entered")
-        return ({"statuscode": 500, "Error":"something went wrong adding profile"})
+        return ({"statuscode": 500, "Error": "something went wrong adding profile"})
 
 
-@app.route("/image", methods = ["POST"])
+@app.route("/image", methods=["POST"])
 @cross_origin(supports_credentials=True)
 def image():
     file = request.files['file']
     response = client.put_object(
-    Body= file,
-    Bucket='admissionsimagebucket',
-    Key= file.filename,
+        Body=file,
+        Bucket='admissionsimagebucket',
+        Key=file.filename,
     )
     print(response)
-    return ({'response':response, 'message' : "successfully updated"})
-    
+    return ({'response': response, 'message': "successfully updated"})
+
 # flask_cors.CORS(app, expose_headers='Authorization')
+
 
 @app.route("/gatApplication", methods=["POST"])
 def gatApplication():
@@ -382,90 +398,108 @@ def WalkinDetails():
     except:
         return ({"statuscode": 500, "status": "something went wrong while updating"})
 
-@app.route("/getProfile",methods=["POST"])
+
+@app.route("/getProfile", methods=["POST"])
 @cross_origin(supports_credentials=True)
 def getProfile():
     data = request.get_json()
     print(f">>>>>>>>>>>>>>>>>>>>>>>>>>>>>{data}<<<<<<<<<<<<<<<<<<<")
-    email=data["email"]
+    email = data["email"]
     print(f"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<{email}>>>>>>>>>>>>>>>>>>>")
-    userObj  = UserProfile.query.get(email)
+    userObj = UserProfile.query.get(email)
     if userObj:
         print(True)
         userprofile = {
-        "full_name":userObj.full_name,
-        "parent_name":userObj.parent_name,
-        "gender":userObj.gender,
-        "address_line1":userObj.address_line1,
-        "address_line2":userObj.address_line2,
-        "city":userObj.city,
-        "place_town":userObj.place_town,
-        "pincode":userObj.pincode,
-        "mobile_no":userObj.mobile_no,
-        "landline_no":userObj.landline_no,
-        "board_number":userObj.board_number,
-        "board_name":userObj.board_name,
-        "btech":userObj.btech,
-        "image_url":userObj.image_url,
-        "email":userObj.email,
-        "date_of_birth":userObj.date_of_birth,
-        "parent_relation":userObj.parent_relation,
-        "nationality":userObj.nationality,
-        "photo_status":userObj.photo_status,
+            "full_name": userObj.full_name,
+            "parent_name": userObj.parent_name,
+            "gender": userObj.gender,
+            "address_line1": userObj.address_line1,
+            "address_line2": userObj.address_line2,
+            "city": userObj.city,
+            "place_town": userObj.place_town,
+            "pincode": userObj.pincode,
+            "mobile_no": userObj.mobile_no,
+            "landline_no": userObj.landline_no,
+            "board_number": userObj.board_number,
+            "board_name": userObj.board_name,
+            "btech": userObj.btech,
+            "image_url": userObj.image_url,
+            "email": userObj.email,
+            "date_of_birth": userObj.date_of_birth,
+            "parent_relation": userObj.parent_relation,
+            "nationality": userObj.nationality,
+            "photo_status": userObj.photo_status,
 
         }
 
-
-        return ({'response':userprofile, 'message' : "True"})
+        return ({'response': userprofile, 'message': "True"})
     else:
-        return ({'response':userObj, 'message' : "False"})
+        return ({'response': userObj, 'message': "False"})
+
 
 @app.route("/orders", methods=["GET", "POST"])
+@cross_origin(supports_credentials=True)
 def order():
     amount = 100
     currency = "INR"
     payment_capture = 1
-    payment = razorpay_client.order.create(amount= amount, currency= currency, payment_capture= payment_capture)
+    payment = razorpay_client.order.create(
+        amount=amount, currency=currency, payment_capture=payment_capture)
     return payment
 
-@app.route("/payment_capture",methods=["GET","POST"])
+
+@app.route("/payment_capture", methods=["GET", "POST"])
 def payment_capture():
-	print("***********************************************************************************************************************")
-	data = dict((key, request.form.getlist(key)) for key in request.form.keys())
-	print(request.form.get("webhook_body"))
-	print(data)
-	print(razorpay_client.utility.verify_webhook_signature(request.form.get("webhook_body"),request.form.get("webhook_signature"),request.form.get("webhook_secret")))
-	print("***********************************************************************************************************************")
-	return "YES"
+    print("***********************************************************************************************************************")
+    data = dict((key, request.form.getlist(key))
+                for key in request.form.keys())
+    print(request.form.get("webhook_body"))
+    print(data)
+    print(razorpay_client.utility.verify_webhook_signature(request.form.get("webhook_body"),
+                                                           request.form.get("webhook_signature"), request.form.get("webhook_secret")))
+    print("***********************************************************************************************************************")
+    return "YES"
+
 
 @app.route('/fetch/<token>')
-@app.route("/fetch",methods=["GET","POST"])
+@app.route("/fetch", methods=["GET", "POST"])
 def fetch(token):
-	print("*****************************************************Fetch******************************************************************")
-	paymentId=str(token)
-	print(paymentId)
-	paymentStatus=razorpay_client.payment.fetch(paymentId)
-	print(paymentStatus)
-	email = "nannakasaisaketh@gmail.com"
-	gatobject = GatApplications.get(email)
-	if paymentStatus['status']=='captured':
-		if gatobject:
-			gatobject.status == "captured"
-			db.session.commit()
+    print("*****************************************************Fetch******************************************************************")
+    temp = str(token).split(",")
+    paymentId = temp[0]
+    paymentStatus = razorpay_client.payment.fetch(paymentId)
+    email = temp[1]
+    gatobject = GatApplications.query.get(email) 
+    print(temp,paymentId,paymentStatus,email,gatobject)
+    if paymentStatus['status'] == 'captured':
+        if gatobject:
+            gatobject.paymentStatus = "done"
+            db.session.add(gatobject)
+            db.session.commit()
+
+    # gatobject2 = GatApplications.query.get(email)
+    print(
+        "*****************************************************Fetch******************************************************************")
+    return {"answer": gatobject.paymentStatus, "answer2": gatobject2.paymentStatus}
 
 
-	print("*****************************************************Fetch******************************************************************")
-	return paymentStatus
+@app.route('/fetch2/<token>')
+@app.route("/fetch2", methods=["GET", "POST"])
+def fetch2(token):
+    print("*****************************************************Fetch******************************************************************")
+    temp = str(token).split(",")
+    paymentId = temp[0]
+    paymentStatus = razorpay_client.payment.fetch(paymentId)
+    email = temp[1]
+    walkinobject = Walkin.query.get(email) 
+    print(temp,paymentId,paymentStatus,email,walkinobject)
+    if paymentStatus['status'] == 'captured':
+        if walkinobject:
+            walkinobject.paymentStatus = "done"
+            db.session.add(walkinobject)
+            db.session.commit()
 
-
-@app.route("/fetch2",methods=["GET","POST"])
-def fetch2():
-	paymentStatus=razorpay_client.payment.fetch_all()
-	gatobject = GatApplications.get("202G00001")
-	if paymentStatus['status']=='captured':
-		if gatobject:
-			gatobject.status == "captured"
-			db.session.commit()
-
-
-	return paymentStatus
+    # walkinobject2 = WalkinApplications.query.get(email)
+    print(
+        "*****************************************************Fetch******************************************************************")
+    return {"answer": walkinobject.paymentStatus}
