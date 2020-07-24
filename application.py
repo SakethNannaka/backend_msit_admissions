@@ -480,7 +480,7 @@ def fetch(token):
     # gatobject2 = GatApplications.query.get(email)
     print(
         "*****************************************************Fetch******************************************************************")
-    return {"answer": gatobject.paymentStatus, "answer2": gatobject2.paymentStatus}
+    return {"answer": gatobject.paymentStatus}
 
 
 @app.route('/fetch2/<token>')
