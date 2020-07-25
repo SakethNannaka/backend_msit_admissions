@@ -249,7 +249,25 @@ def confirm_email(token):
         db.session.add(user)
         db.session.commit()
         print('You have confirmed your account. Thanks!,success')
-        return('You have confirmed your account. Thanks!,success')
+        return("""<!DOCTYPE html>
+<html>
+<head>
+	<title>Account Verified</title>
+</head>
+<body>
+<div class="modal fade" id="exampleModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="card mx-auto mt-5">
+            <div class="card-body text-center"><img src="https://i.imgur.com/l4gliRI.png">
+                <h5 class="pt-5 pb-3">Amazing!</h5>
+                <p class="justify">Your Account has been successfully verified!!! Please login to continue</p>
+                <a href="https://admissions-react-msit.herokuapp.com/login"><button type="button" class="btn btn-primary btn-square">Login</button></a> 
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>""")
 
 
 @app.route('/profile', methods=["POST"])
