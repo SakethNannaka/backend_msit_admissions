@@ -14,10 +14,7 @@ def send_email(receiver_email,token_url):
 
     # Create the plain-text and HTML version of your message
     text = """\
-    Hi,
-    How are you?
-    Real Python has many great tutorials:
-    www.realpython.com"""
+    Welcome to MSIT Admissions"""
     html = """\
 <!doctype html>
                         <html>
@@ -193,7 +190,7 @@ def send_email(receiver_email,token_url):
                     </tr> <!-- COPY -->
                     <tr>
                         <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;"><a href=""http://localhost:5000/confirm_email/{token_url}"" target="_blank" style="color: #FFA73B;">"http://localhost:5000/confirm_email/{token_url}"</a></p>
+                            <p style="margin: 0;"><a href=""https://flask-deploy-admissions.herokuapp.com/confirm_email/{token_url}"" target="_blank" style="color: #FFA73B;">"http://localhost:5000/confirm_email/{token_url}"</a></p>
                         </td>
                     </tr>
                     <tr>
