@@ -2,7 +2,7 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-def send_hallticket(receiver_email):
+def send_email(receiver_email,token_url):
     port = 587  # For starttls
     smtp_server = "smtp.gmail.com"
     sender_email = "msitadmissions12@gmail.com"
