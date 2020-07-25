@@ -68,6 +68,7 @@ def send_email(receiver_email,token_url):
                 src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v11/HkF_qI1x_noxlxhrhMQYELO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
             }
         }
+        
 
         /* CLIENT-SPECIFIC STYLES */
         body,
