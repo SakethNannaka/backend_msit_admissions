@@ -104,9 +104,9 @@ def register():
         return ({"statuscode": 200, "success": "user registered successfully"})
     except exc.IntegrityError:
         return ({"statuscode": 400, "Error": "User already exists"})
-    except:
-        print('exception message', 'something went wrong while adding user')
-        return ({"statuscode": 500, "Error": "something went wrong while sending email"})
+#     except:
+#         print('exception message', 'something went wrong while adding user')
+#         return ({"statuscode": 500, "Error": "something went wrong while sending email"})
 
 
 @app.route("/changepassword", methods=["POST"])
