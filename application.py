@@ -14,18 +14,12 @@ from ForgotEmail import *
 from OTP import *
 from flask_cors import CORS, cross_origin
 from itsdangerous import URLSafeTimedSerializer
-# from flask.ext.cors import CORS
-# from flask_cors import CORS, cross_origin
-# from itsdangerous import URLSafeTimedSerializer
-from tokens import *
 import boto3
 import razorpay
 from werkzeug.datastructures import *
 
 
 # ******************************
-# from itsdangerous import URLSafeTimedSerializer
-# import bcrypt
 SECRET_KEY = '9OLWxND4o83j4K4iuopO'
 SECURITY_PASSWORD_SALT = 'my_precious_two'
 
