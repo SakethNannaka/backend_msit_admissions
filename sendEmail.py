@@ -260,5 +260,5 @@ def send_email(receiver_email,token_url):
             server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, message.as_string())
             server.close()
-   except:
-    print("login/email sending failed")
+    except:
+        print("login/email sending failed")
