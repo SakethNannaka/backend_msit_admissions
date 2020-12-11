@@ -256,7 +256,7 @@ def send_email(receiver_email,token_url):
         # Extended HELO (EHLO) is an Extended Simple Mail Transfer Protocol (ESMTP) command sent by an email server to identify itself when connecting to another email server to start the process of sending an email. ... The EHLO command tells the receiving server it supports extensions compatible with ESMTP.
             server.ehlo()  # Can be omitted
             server.starttls(context=context)
-            server.ehlo()  # Can be omitted
+            # server.ehlo()  # Can be omitted
             server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, message.as_string())
             server.close()
