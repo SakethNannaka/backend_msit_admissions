@@ -7,7 +7,7 @@ Project Flow:
 The main module of this project is application.py,Locally we launch the programme by running the flask and setting the path to the module application py. But since it is being deployed on Heroku , we have to mention what to start using procfile .
 
 
-Here we use the procfile that starts module wsgi.py using gunicorn. wsgi.py imports all the modules from application.py.
+Here in the procfile we start the module wsgi.py using gunicorn. wsgi.py imports all the modules from application.py.
 
 
 
