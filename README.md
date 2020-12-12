@@ -11,14 +11,15 @@ Here in the procfile we start the module wsgi.py using gunicorn. wsgi.py imports
 
 
 
-ProcFile->wsgi.py->Application.py.
+ProcFile(started by heroku)-> wsgi.py(started by procFile using gunicorn)-> application.py(imported in wsgi.py).
 
-there are other modules:
+ Modules Like :
   sendEmail.py 
   ForgotEmail.py
   OTP.py
   test_Files.py
-which are used as seperate modules to reduce the complexity and ease of use
+  Email_helper.py
+which are used as seperate modules to reduce the complexity and ease of use of application.py
 
 other modules :
     models.py
