@@ -1,10 +1,11 @@
 from sendEmail import *
 from ForgotEmail import *
 email = "nannakasaisaketh@gmail.com"
+# Testing for sendEmail
 # print("_________________________________________________________________________________________")
-# token_cd=generate_confirmation_token(email)
-# print(token_cd)
-print("_________________________________________________________________________________________")
-token_cd="sbhshshbsh"
-send_email(email,token_cd)
+# token_cd="sbhshshbsh"
+# send_email(email,token_cd)
 
+# Testing for ForgotEmail
+print("_________________________________________________________________________________________")
+forgot_email(email,9890)
