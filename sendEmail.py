@@ -2,9 +2,9 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from Email_helper import *
-# import sendgrid
-# import os
-# from sendgrid.helpers.mail import *
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
 
 def send_email(receiver_email,token_url):
     port = 587  # For ssl for ttl it's 587
