@@ -2,9 +2,9 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from Email_helper import *
-import sendgrid
-import os
-from sendgrid.helpers.mail import *
+# import sendgrid
+# import os
+# from sendgrid.helpers.mail import *
 
 def send_email(receiver_email,token_url):
     port = 587  # For ssl for ttl it's 587
@@ -16,8 +16,7 @@ def send_email(receiver_email,token_url):
     message["From"] = sender_email
     message["To"] = receiver_email
 
-    html = htm+str("""<td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="https://flask-deploy-admissions.herokuapp.com/confirm_email/{token_url}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Confirm Account</a></td>"""
-    )+html2
+    html = htm+f"""<td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="https://flask-deploy-admissions.herokuapp.com/confirm_email/{token_url}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Confirm Account</a></td>"""+str(html2)
 
     # Turn these into plain/html MIMEText objects
     part1 = MIMEText(text, "plain")
@@ -50,4 +49,3 @@ def send_email(receiver_email,token_url):
         print(response.status_code)
         print(response.body)
         print(response.headers)
-
