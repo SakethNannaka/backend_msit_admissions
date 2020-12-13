@@ -2,6 +2,9 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from Email_helper import *
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
 
 def send_email(receiver_email,token_url):
     port = 587  # For ssl for ttl it's 587
@@ -26,8 +29,8 @@ def send_email(receiver_email,token_url):
     message.attach(part2)
     
     context = ssl.create_default_context()
-    # try:
-    with smtplib.SMTP(smtp_server, port) as server:
+    try:
+        with smtplib.SMTP(smtp_server, port) as server:
         # Extended HELO (EHLO) is an Extended Simple Mail Transfer Protocol (ESMTP) command sent by an email server to identify itself when connecting to another email server to start the process of sending an email. ... The EHLO command tells the receiving server it supports extensions compatible with ESMTP.
             server.ehlo()  # Can be omitted
             server.starttls(context=context)
@@ -35,5 +38,16 @@ def send_email(receiver_email,token_url):
             server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, message.as_string())
             server.close()
-    # except:
-        # print("login/email sending failed")
+    except:
+        print("login/email sending failed")
+        sg = sendgrid.SendGridAPIClient("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")
+        from_email = Email("msitadmissions12@gmail.com")
+        to_email = To(receiver_email)
+        subject = "Sending with SendGrid is Fun"
+        content = Content("text/plain", "and easy to do anywhere, even with Python")
+        mail = Mail(from_email, to_email, subject, message.as_string())
+        response = sg.client.mail.send.post(request_body=mail.get())
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+
