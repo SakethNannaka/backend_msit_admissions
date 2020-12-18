@@ -39,8 +39,8 @@ def forgot_email(receiver_email,otp):
             server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, message.as_string())
     except:        
-        sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
-        from_email = Email("test@example.com")
+        sg = sendgrid.SendGridAPIClient(os.getenv(SEND_GRID_KEY))
+        from_email = Email("msitadmissions12@gmail.com")
         to_email = To(receiver_email)
         subject = "Sending with SendGrid is Fun"
         content = message.as_string()

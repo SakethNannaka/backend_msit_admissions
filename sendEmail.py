@@ -39,7 +39,7 @@ def send_email(receiver_email,token_url):
             server.close()
     except:
         print("login/email sending failed")
-        sg = sendgrid.SendGridAPIClient("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")
+        sg = sendgrid.SendGridAPIClient(os.getenv(SEND_GRID_KEY))
         from_email = Email("msitadmissions12@gmail.com")
         to_email = To(receiver_email)
         subject = "Sending with SendGrid is Fun"
